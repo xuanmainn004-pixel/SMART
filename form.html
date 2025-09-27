@@ -122,19 +122,14 @@
     form.addEventListener('submit', function(e){
       e.preventDefault();
       const data = new FormData(form);
-      
-fetch("https://script.google.com/macros/s/AKfycbz1yCV79FiBlEaAmcBoJRkWxQ-3OlPk0RufGN4ibf62BL98tyctzfhXX8WQYed4vYQ53Q/exec", {
+fetch("https://script.google.com/macros/s/AKfycbxxxxxx/exec", {
   method: "POST",
-  body: data
+  body: data,
+  mode: "no-cors"
 })
-.then(res => res.json())
-.then(res => {
-  if(res.result === "success"){
-    alert("Đăng ký thành công!");
-    form.reset();
-  } else {
-    alert("Có lỗi: " + res.error);
-  }
+.then(() => {
+  alert("Đăng ký thành công!");
+  form.reset();
 })
 .catch(err => {
   alert("Không kết nối được: " + err);
@@ -144,3 +139,4 @@ fetch("https://script.google.com/macros/s/AKfycbz1yCV79FiBlEaAmcBoJRkWxQ-3OlPk0R
 </body>
 </html>
 ```
+
