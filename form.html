@@ -124,12 +124,16 @@
       const data = new FormData(form);
 fetch("https://script.google.com/macros/s/AKfycbxxxxxx/exec", {
   method: "POST",
-  body: data,
-  mode: "no-cors"
+  body: data
 })
-.then(() => {
-  alert("Đăng ký thành công!");
-  form.reset();
+.then(res => res.json())
+.then(res => {
+  if(res.result === "success"){
+    alert("Đăng ký thành công!");
+    form.reset();
+  } else {
+    alert("Có lỗi: " + res.message);
+  }
 })
 .catch(err => {
   alert("Không kết nối được: " + err);
@@ -139,4 +143,5 @@ fetch("https://script.google.com/macros/s/AKfycbxxxxxx/exec", {
 </body>
 </html>
 ```
+
 
