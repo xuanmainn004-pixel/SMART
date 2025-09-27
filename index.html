@@ -117,32 +117,42 @@
   <!-- iframe ẩn để chống reload trang -->
   <iframe name="hidden_iframe" style="display:none;"></iframe>
 
-  <script>
-    const form = document.getElementById('submit-form');
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      const data = new FormData(form);
-fetch("https://script.google.com/macros/s/AKfycbznhhBRXIA8p0OJpxwUVk-mFHoJ_kEnXzGv2VH7CF4pS1pZaUeDBhuXHoten4Apbm0zgA/exec", {
-  method: "POST",
-  body: data
-})
-.then(res => res.json())
-.then(res => {
-  if(res.result === "success"){
-    alert("Đăng ký thành công!");
-    form.reset();
-  } else {
-    alert("Có lỗi: " + res.message);
-  }
-})
-.catch(err => {
-  alert("Không kết nối được: " + err);
-});
+ <script>
+document.querySelector("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const data = {
+    name: formData.get("name"),
+    phone: formData.get("phone")
+  };
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbznhhBRXIA8p0OJpxwUVk-mFHoJ_kEnXzGv2VH7CF4pS1pZaUeDBhuXHoten4Apbm0zgA/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams(data)
     });
-  </script>
+
+    const result = await response.json();
+
+    if (result.result === "success") {
+      alert("Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn.");
+      e.target.reset();
+    } else {
+      alert("Có lỗi xảy ra: " + result.message);
+    }
+  } catch (err) {
+    alert("Không kết nối được: " + err);
+  }
+});
+</script>
 </body>
 </html>
 ```
+
 
 
 
